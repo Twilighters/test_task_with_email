@@ -1,5 +1,4 @@
 from models.auth import AuthData
-from common.constants import EmailConstants
 
 
 class TestAuth:
@@ -22,6 +21,4 @@ class TestAuth:
         app.login.click_submit_button()
         app.login.input_password(data.password)
         app.login.click_submit_button()
-        assert (
-            EmailConstants.SEND_EMAIL_BUTTON == app.login.find_send_email_button()
-        ), "We are not auth"
+        assert app.login.is_auth(), "We are not auth"

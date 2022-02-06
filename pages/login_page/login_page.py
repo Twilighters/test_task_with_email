@@ -2,6 +2,7 @@ import logging
 
 from selenium.webdriver.remote.webelement import WebElement
 
+from common.constants import EmailConstants
 from locators.email_page_locators import EmailPageLocators
 from locators.login_page_locators import LoginPageLocators
 
@@ -28,6 +29,7 @@ class LoginPage(BasePage):
 
     def auth(self, data: AuthData):
         logger.info(f'User email is "{data.login}, user password {data.password}"')
+        self.app.login.click_first_login_button()
         self.input_email(data.login)
         self.click_submit_button()
         self.input_password(data.password)
@@ -39,5 +41,18 @@ class LoginPage(BasePage):
     def first_login_button(self) -> WebElement:
         return self.find_element(LoginPageLocators.FIRST_LOGIN_BUTTON)
 
-    def find_send_email_button(self) -> str:
-        return self.find_element(EmailPageLocators.WRITE_MAIL_BUTTON).text
+    def is_auth(self):
+        element = self.find_element(EmailPageLocators.SEND_EMAIL_BUTTON).text
+        if element == EmailConstants.SEND_EMAIL_BUTTON_TEXT:
+            return True
+
+    def sign_out(self):
+        if self.is_auth():
+            self.click_element(self.user_menu())
+            self.click_element(self.exit())
+
+    def user_menu(self) -> WebElement:
+        return self.find_element(EmailPageLocators.USER_MENU)
+
+    def exit(self) -> WebElement:
+        return self.find_element(EmailPageLocators.EXIT)

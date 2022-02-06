@@ -8,7 +8,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from pages.application.application import Application
 from models.auth import AuthData
 
-
 logger = logging.getLogger("test_platform")
 
 
@@ -40,11 +39,10 @@ def auth(app, request):
     username = request.config.getoption("--username")
     password = request.config.getoption("--password")
     app.open_auth_page()
+
     auth_data = AuthData(login=username, password=password)
     app.login.auth(auth_data)
     assert app.login.is_auth(), "You are not auth"
-    yield
-    app.login.sign_out()
 
 
 def pytest_addoption(parser):
