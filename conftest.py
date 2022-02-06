@@ -19,7 +19,7 @@ def app(request):
     logger.info(f"Start test platform {base_url} with headless={headless_mode} mode")
     if headless_mode == "true":
         chrome_options = Options()
-        chrome_options.headless = True
+        chrome_options.headless = False
         fixture = Application(
             webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options),
             base_url,
@@ -58,18 +58,18 @@ def pytest_addoption(parser):
     parser.addoption(
         "--base-url",
         action="store",
-        default="http://uitestingplayground.com/sampleapp",
+        default="https://mail.yandex.ru/",
         help="enter base_url",
     ),
     parser.addoption(
         "--username",
         action="store",
-        default="standard_user",
+        default="task.testing@yandex.ru",
         help="enter username",
     ),
     parser.addoption(
         "--password",
         action="store",
-        default="secret_sauce!",
+        default="Username1",
         help="enter password",
     ),
