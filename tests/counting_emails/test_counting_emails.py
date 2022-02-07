@@ -2,7 +2,7 @@ import pytest
 
 
 class TestCountingEmails:
-    @pytest.mark.xfail
+    @pytest.mark.xfail(reason="yandex fail number of mail")
     def test_counting_emails(self, app, auth):
         """
         Steps

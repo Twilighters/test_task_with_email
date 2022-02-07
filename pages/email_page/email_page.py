@@ -2,6 +2,7 @@ import logging
 
 from selenium.webdriver.remote.webelement import WebElement
 from locators.email_page_locators import EmailPageLocators
+from locators.login_page_locators import LoginPageLocators
 from pages.base_page import BasePage
 
 logger = logging.getLogger("test-task")
@@ -55,3 +56,47 @@ class EmailPage(BasePage):
     def is_success_send(self):
         element = self.find_element(EmailPageLocators.SUCCESS_SEND_EMAIL).text
         return element
+
+    def user_menu(self) -> WebElement:
+        return self.find_element(EmailPageLocators.USER_MENU)
+
+    def click_user_menu_button(self):
+        self.click_element(self.user_menu())
+
+    def exit(self) -> WebElement:
+        return self.find_element(EmailPageLocators.EXIT)
+
+    def click_exit_button(self):
+        self.click_element(self.exit())
+
+    def current_account_from_login(self) -> WebElement:
+        return self.find_element(LoginPageLocators.CURRENT_ACCOUNT)
+
+    def dots_menu_from_login(self) -> WebElement:
+        return self.find_element(LoginPageLocators.DOTS_MENU)
+
+    def delete_form_list_from_login(self) -> WebElement:
+        return self.find_element(LoginPageLocators.DELETE_FROM_LIST)
+
+    def previous_step_from_login(self) -> WebElement:
+        return self.find_element(LoginPageLocators.PREVIOUS_STEP_BUTTON)
+
+    def click_current_account_from_login(self):
+        self.click_element(self.current_account_from_login())
+
+    def click_dots_menu_from_login(self):
+        self.click_element(self.dots_menu_from_login())
+
+    def click_delete_form_list_from_login(self):
+        self.click_element(self.delete_form_list_from_login())
+
+    def click_previous_step_from_login(self):
+        self.click_element(self.previous_step_from_login())
+
+    def sign_out(self):
+        self.click_user_menu_button()
+        self.click_exit_button()
+        self.click_current_account_from_login()
+        self.click_dots_menu_from_login()
+        self.click_delete_form_list_from_login()
+        self.click_previous_step_from_login()
