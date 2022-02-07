@@ -19,7 +19,7 @@ def app(request):
     logger.info(f"Start test platform {base_url} with headless={headless_mode} mode")
     if headless_mode == "true":
         chrome_options = Options()
-        chrome_options.headless = True
+        chrome_options.headless = False
         fixture = Application(
             webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options),
             base_url,
@@ -64,7 +64,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--username",
         action="store",
-        default="task.testing@yandex.ru",
+        default="task1testing@yandex.ru",
         help="enter username",
     ),
     parser.addoption(

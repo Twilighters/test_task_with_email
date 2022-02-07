@@ -31,7 +31,7 @@ class TestSendingEmailWithCountOfMails:
         """
         app.open_auth_page()
         app.login.click_first_login_button()
-        data = AuthData(login="task.testing@yandex.ru", password="Username1")
+        data = AuthData(login="task1testing@yandex.ru", password="Username1")
         app.login.input_email(data.login)
         app.login.click_submit_button()
         app.login.input_password(data.password)
