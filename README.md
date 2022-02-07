@@ -1,4 +1,7 @@
+[![CircleCI](https://circleci.com/gh/Twilighters/test_task_with_email/tree/main.svg?style=svg)](https://circleci.com/gh/Twilighters/test_task_with_email/tree/main)
+
 ## Создание отчетов при помощи Allure
+
 ***
 Чтобы сгенерировать Allure отчет после прогона тестов необходимо выполнить два шага:
 1. Скачать (установить) _**Allure commandline application**_  на свою операционную систему.
