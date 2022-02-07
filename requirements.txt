@@ -79,4 +79,3 @@ virtualenv==20.13.1
 vulture==2.3
 webdriver-manager==3.5.2
 webencodings==0.5.1
-wsproto==1.0.0
