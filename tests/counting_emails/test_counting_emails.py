@@ -1,4 +1,8 @@
+import pytest
+
+
 class TestCountingEmails:
+    @pytest.mark.xfail
     def test_counting_emails(self, app, auth):
         """
         Steps

@@ -42,17 +42,6 @@ class LoginPage(BasePage):
         return self.find_element(LoginPageLocators.FIRST_LOGIN_BUTTON)
 
     def is_auth(self):
-        element = self.find_element(EmailPageLocators.SEND_EMAIL_BUTTON).text
+        element = self.find_element(EmailPageLocators.TO_WRITE_EMAIL_BUTTON).text
         if element == EmailConstants.SEND_EMAIL_BUTTON_TEXT:
             return True
-
-    def sign_out(self):
-        if self.is_auth():
-            self.click_element(self.user_menu())
-            self.click_element(self.exit())
-
-    def user_menu(self) -> WebElement:
-        return self.find_element(EmailPageLocators.USER_MENU)
-
-    def exit(self) -> WebElement:
-        return self.find_element(EmailPageLocators.EXIT)
