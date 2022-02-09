@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
+from config import PASSWORD, LOGIN
 from pages.application.application import Application
 from models.auth import AuthData
 
@@ -19,7 +20,7 @@ def app(request):
     logger.info(f"Start test platform {base_url} with headless={headless_mode} mode")
     if headless_mode == "true":
         chrome_options = Options()
-        chrome_options.headless = True
+        chrome_options.headless = False
         fixture = Application(
             webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options),
             base_url,
@@ -39,7 +40,7 @@ def app(request):
 def auth(app, request):
     username = request.config.getoption("--username")
     password = request.config.getoption("--password")
-    app.open_auth_page()
+    app.open_main_page()
 
     auth_data = AuthData(login=username, password=password)
     app.login.auth(auth_data)
@@ -64,13 +65,13 @@ def pytest_addoption(parser):
     parser.addoption(
         "--username",
         action="store",
-        default="task1testing@yandex.ru",
+        default=LOGIN,
         help="enter username",
     ),
     parser.addoption(
         "--password",
         action="store",
-        default="Username1",
+        default=PASSWORD,
         help="enter password",
     ),
 

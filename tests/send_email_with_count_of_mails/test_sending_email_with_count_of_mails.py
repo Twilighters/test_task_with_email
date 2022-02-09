@@ -1,8 +1,13 @@
+import allure
+
 from common.constants import EmailConstants
+from config import LOGIN, PASSWORD
 from models.auth import AuthData
 
 
 class TestSendingEmailWithCountOfMails:
+    @allure.feature("Проверка авторизации и отправки писем")
+    @allure.story("Подсчет писем, которые были отправлены на 3 шаге Тестового Задания")
     def test_sending_email_with_count_of_mails_valid_data(self, app):
         """
         Steps
@@ -29,23 +34,36 @@ class TestSendingEmailWithCountOfMails:
              The text is displayed correctly and the number of
         14. Click on the send button to make sure that the email has been sent
         """
-        app.open_auth_page()
-        app.login.click_first_login_button()
-        data = AuthData(login="task1testing@yandex.ru", password="Username1")
-        app.login.input_email(data.login)
-        app.login.click_submit_button()
-        app.login.input_password(data.password)
-        app.login.click_submit_button()
-        assert app.login.is_auth(), "We are not auth"
-        app.email.input_search_field("Simbirsoft Тестовое задание")  # noqa
-        app.email.click_search_button()
-        app.email.click_to_write_email_button()
-        app.email.input_to_field(data.login)
-        app.email.input_subject_field("Simbirsoft Тестовое задание. Манаев")
-        app.email.input_body_of_mail_field(
-            "Письма с третьего шага получены. Сейчас их {0}".format(
-                app.email.find_list_of_mails()
+        with allure.step("Открываем сайт и авторизуемся"):
+            app.open_main_page()
+            app.login.click_first_login_button()
+            data = AuthData(login=LOGIN, password=PASSWORD)
+            app.login.input_email(data.login)
+            app.login.click_submit_button()
+            app.login.input_password(data.password)
+            app.login.click_submit_button()
+        with allure.step("Проверяем успешность авторизации"):
+            assert app.login.is_auth(), "We are not auth"
+        with allure.step("Ищем письма"):
+            app.email.input_search_field("Simbirsoft Тестовое задание")  # noqa
+            app.email.click_search_button()
+        with allure.step(
+            "Данные по количеству писем подсчитаны, "
+            "теперь вводим данные для отправки почты и отправялем её"
+        ):
+            app.email.click_to_write_email_button()
+            app.email.input_to_field(data.login)
+            app.email.input_subject_field("Simbirsoft Тестовое задание. Манаев")
+            app.email.input_body_of_mail_field(
+                "Письма с третьего шага получены. Сейчас их {0}".format(
+                    app.email.find_list_of_mails()
+                )
             )
-        )
-        app.email.click_send_email_button()
-        assert app.email.is_success_send() == EmailConstants.SUCCESS_SEND_EMAIL_TEXT
+            app.email.click_send_email_button()
+        with allure.step("Проверяем успешность отправки письма"):
+            assert (
+                app.email.find_text_about_success_sending_email()
+                == EmailConstants.SUCCESS_SEND_EMAIL_TEXT
+            ), "Email has not been sent"
+        with allure.step("Тестовое задание успешно выполнено"):
+            pass

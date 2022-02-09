@@ -43,5 +43,4 @@ class LoginPage(BasePage):
 
     def is_auth(self):
         element = self.find_element(EmailPageLocators.TO_WRITE_EMAIL_BUTTON).text
-        if element == EmailConstants.SEND_EMAIL_BUTTON_TEXT:
-            return True
+        return element == EmailConstants.SEND_EMAIL_BUTTON_TEXT

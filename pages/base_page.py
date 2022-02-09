@@ -1,25 +1,28 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from config import WAIT_TIME
 
 
 class BasePage:
     def __init__(self, app):
         self.app = app
 
-    def find_element(self, locator, wait_time=60):
-        element = WebDriverWait(self.app.driver, wait_time).until(
+    def find_element(self, locator):
+        element = WebDriverWait(self.app.driver, WAIT_TIME).until(
             EC.presence_of_element_located(locator),
             message=f"Can't find element by locator {locator}",
         )
         return element
 
-    def fill_element(self, element, text):
+    @staticmethod
+    def fill_element(element, text):
         element.clear()
         if text:
             element.send_keys(text)
             return element
 
-    def click_element(self, element):
+    @staticmethod
+    def click_element(element):
         element.click()
 
     def find_elements(self, locator):

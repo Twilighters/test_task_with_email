@@ -13,21 +13,21 @@ class EmailPage(BasePage):
         search_field_locator = self.find_element(EmailPageLocators.SEARCH_FIELD)
         search_field_locator.send_keys(text)
 
-    def find_search_button(self) -> WebElement:
-        return self.find_element(EmailPageLocators.SEARCH_BUTTON)
-
     def click_search_button(self):
-        self.click_element(self.find_search_button())
+        self.click_element(self.find_element(EmailPageLocators.SEARCH_BUTTON))
 
     def find_list_of_mails(self) -> int:
         element = self.find_elements(EmailPageLocators.LIST_OF_MAILS)
         return len(element)
 
-    def yandex_number_of_mails(self):
+    def yandex_number_of_mails(self) -> int:
+        """
+        Finding text as element and his convert to int
+        """
         element = self.find_element(EmailPageLocators.COUNT_OF_MAILS_BY_YANDEX).text
-        element_convert_to_int = "".join(filter(lambda x: x.isdigit(), element))
-        element_convert_to_int = int(element_convert_to_int)
-        return element_convert_to_int
+        element = "".join(filter(lambda x: x.isdigit(), element))
+        element = int(element)
+        return element
 
     def to_write_email_button(self) -> WebElement:
         return self.find_element(EmailPageLocators.TO_WRITE_EMAIL_BUTTON)
@@ -53,27 +53,18 @@ class EmailPage(BasePage):
     def click_send_email_button(self):
         self.click_element(self.send_email_button())
 
-    def is_success_send(self):
+    def find_text_about_success_sending_email(self) -> str:
         element = self.find_element(EmailPageLocators.SUCCESS_SEND_EMAIL).text
         return element
 
-    def user_menu(self) -> WebElement:
-        return self.find_element(EmailPageLocators.USER_MENU)
-
     def click_user_menu_button(self):
-        self.click_element(self.user_menu())
-
-    def exit(self) -> WebElement:
-        return self.find_element(EmailPageLocators.EXIT)
+        self.click_element(self.find_element(EmailPageLocators.USER_MENU))
 
     def click_exit_button(self):
-        self.click_element(self.exit())
+        self.click_element(self.find_element(EmailPageLocators.EXIT))
 
     def current_account_from_login(self) -> WebElement:
         return self.find_element(LoginPageLocators.CURRENT_ACCOUNT)
-
-    def dots_menu_from_login(self) -> WebElement:
-        return self.find_element(LoginPageLocators.DOTS_MENU)
 
     def delete_form_list_from_login(self) -> WebElement:
         return self.find_element(LoginPageLocators.DELETE_FROM_LIST)
@@ -85,7 +76,7 @@ class EmailPage(BasePage):
         self.click_element(self.current_account_from_login())
 
     def click_dots_menu_from_login(self):
-        self.click_element(self.dots_menu_from_login())
+        self.click_element(self.find_element(LoginPageLocators.DOTS_MENU))
 
     def click_delete_form_list_from_login(self):
         self.click_element(self.delete_form_list_from_login())
