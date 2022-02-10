@@ -47,6 +47,7 @@ class TestSendingEmailWithCountOfMails:
         with allure.step("Ищем письма"):
             app.email.input_search_field("Simbirsoft Тестовое задание")  # noqa
             app.email.click_search_button()
+            number_of_emails_found = app.email.find_list_of_mails()
         with allure.step(
             "Данные по количеству писем подсчитаны, "
             "теперь вводим данные для отправки почты и отправялем её"
@@ -56,7 +57,7 @@ class TestSendingEmailWithCountOfMails:
             app.email.input_subject_field("Simbirsoft Тестовое задание. Манаев")
             app.email.input_body_of_mail_field(
                 "Письма с третьего шага получены. Сейчас их {0}".format(
-                    app.email.find_list_of_mails()
+                    number_of_emails_found
                 )
             )
             app.email.click_send_email_button()

@@ -4,13 +4,28 @@ import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+
+# from webdriver_manager.chrome import ChromeDriverManager
 
 from config import PASSWORD, LOGIN
 from pages.application.application import Application
 from models.auth import AuthData
 
 logger = logging.getLogger("test_platform")
+
+capabilities_chrome = {
+    "browserName": "chrome",
+    "browserVersion": "98.0",
+    "selenoid:options": {"enableVNC": True, "enableVideo": False},
+}
+
+driver_chrome = webdriver.Remote(
+    command_executor="http://localhost:4444/wd/hub",
+    desired_capabilities=capabilities_chrome.copy(),
+)
+
+
+# driver = webdriver.Chrome(ChromeDriverManager().install())
 
 
 @pytest.fixture(scope="session")
@@ -21,15 +36,9 @@ def app(request):
     if headless_mode == "true":
         chrome_options = Options()
         chrome_options.headless = False
-        fixture = Application(
-            webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options),
-            base_url,
-        )
+        fixture = Application(driver_chrome, base_url)
     elif headless_mode == "false":
-        fixture = Application(
-            webdriver.Chrome(ChromeDriverManager().install()),
-            base_url,
-        )
+        fixture = Application(driver_chrome, base_url)
     else:
         raise pytest.UsageError("--headless should be true or false")
     yield fixture
