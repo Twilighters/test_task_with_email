@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 # from webdriver_manager.chrome import ChromeDriverManager
-
+# from webdriver_manager.firefox import GeckoDriverManager
 from config import PASSWORD, LOGIN
 from pages.application.application import Application
 from models.auth import AuthData
@@ -25,7 +25,8 @@ driver_chrome = webdriver.Remote(
 )
 
 
-# driver = webdriver.Chrome(ChromeDriverManager().install())
+# driver_chrome = webdriver.Chrome(ChromeDriverManager().install())
+# driver_firefox = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
 
 @pytest.fixture(scope="session")

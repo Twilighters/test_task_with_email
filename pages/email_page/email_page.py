@@ -37,15 +37,17 @@ class EmailPage(BasePage):
 
     def input_to_field(self, text) -> None:
         search_field_locator = self.find_element(EmailPageLocators.TO_FIELD)
-        search_field_locator.send_keys(text)
+        self.fill_element(search_field_locator, text)
 
     def input_subject_field(self, text) -> None:
         search_field_locator = self.find_element(EmailPageLocators.SUBJECT_FIELD)
-        search_field_locator.send_keys(text)
+        self.click_element(search_field_locator)
+        self.fill_element(search_field_locator, text)
 
     def input_body_of_mail_field(self, text) -> None:
-        search_field_locator = self.find_element(EmailPageLocators.BODY_OF_MAIL_FIELD)
-        search_field_locator.send_keys(text)
+        body_field_locator = self.find_element(EmailPageLocators.BODY_OF_MAIL_FIELD)
+        self.click_element(body_field_locator)
+        self.fill_element(body_field_locator, text)
 
     def send_email_button(self) -> WebElement:
         return self.find_element(EmailPageLocators.SEND_MAIL_BUTTON)

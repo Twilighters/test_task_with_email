@@ -13,6 +13,6 @@ class EmailPageLocators:
     # Write e-mail
     TO_FIELD = (By.CSS_SELECTOR, ".ComposeRecipients-ToField .composeYabbles")
     SUBJECT_FIELD = (By.CSS_SELECTOR, "input[name='subject']")
-    BODY_OF_MAIL_FIELD = (By.CSS_SELECTOR, "#cke_1_contents_wrap [hidefocus] div")
+    BODY_OF_MAIL_FIELD = (By.CSS_SELECTOR, ".cke_wysiwyg_div")
     SEND_MAIL_BUTTON = (By.CSS_SELECTOR, "[aria-disabled='false']")
     SUCCESS_SEND_EMAIL = (By.CSS_SELECTOR, ".ComposeDoneScreen-Title")
