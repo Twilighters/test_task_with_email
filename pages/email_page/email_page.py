@@ -11,7 +11,7 @@ logger = logging.getLogger("test-task")
 class EmailPage(BasePage):
     def input_search_field(self, text) -> None:
         search_field_locator = self.find_element(EmailPageLocators.SEARCH_FIELD)
-        search_field_locator.send_keys(text)
+        self.fill_element(search_field_locator, text)
 
     def click_search_button(self):
         self.click_element(self.find_element(EmailPageLocators.SEARCH_BUTTON))
