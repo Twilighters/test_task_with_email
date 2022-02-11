@@ -1,5 +1,16 @@
-[![CircleCI](https://circleci.com/gh/Twilighters/test_task_with_email/tree/main.svg?style=svg)](https://circleci.com/gh/Twilighters/test_task_with_email/tree/main)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+# Python + Pytest + Selenium + Selenoid. Test email sending
+## Selenoid - Selenium grid on docker containers
+***
+1. Запустить Selenoid командами:
+   1. Download the latest release binary from [GitHub releases](https://github.com/aerokube/cm/releases) for your platform (linux/darwin/windows).
+   2. In CLI run ```./cm.exe selenoid start --vnc```
+   3. In CLI run ```./cm.exe selenoid-ui start```
+2. Запустить тесты: ```pytest```
+3. Открыть Selenoid UI, который доступен по адресу http://localhost:8080/
+
+***
 ## Создание отчетов при помощи Allure
 
 ***

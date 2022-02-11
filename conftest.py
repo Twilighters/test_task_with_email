@@ -1,88 +1,92 @@
+from __future__ import annotations
+
 import logging
 
 import allure
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
-# from webdriver_manager.chrome import ChromeDriverManager
-# from webdriver_manager.firefox import GeckoDriverManager
-from config import PASSWORD, LOGIN
-from pages.application.application import Application
+from config import LOGIN
+from config import PASSWORD
+from config import URL
 from models.auth import AuthData
+from pages.application.application import Application
 
-logger = logging.getLogger("test_platform")
+logger = logging.getLogger('test_platform')
 
 capabilities_chrome = {
-    "browserName": "chrome",
-    "browserVersion": "98.0",
-    "selenoid:options": {"enableVNC": True, "enableVideo": False},
+    'browserName': 'chrome',
+    'browserVersion': '98.0',
+    'selenoid:options': {'enableVNC': True, 'enableVideo': False},
 }
 
 driver_chrome = webdriver.Remote(
-    command_executor="http://localhost:4444/wd/hub",
+    command_executor='http://localhost:4444/wd/hub',
     desired_capabilities=capabilities_chrome.copy(),
 )
 
+capabilities_firefox = {
+    'browserName': 'firefox',
+    'browserVersion': '96.0',
+    'selenoid:options': {
+        'enableVNC': True,
+        'enableVideo': False,
+    },
+}
 
-# driver_chrome = webdriver.Chrome(ChromeDriverManager().install())
-# driver_firefox = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+driver_firefox = webdriver.Remote(
+    command_executor='http://localhost:4444/wd/hub',
+    desired_capabilities=capabilities_firefox.copy(),
+)
+
+driver_list = [driver_chrome, driver_firefox]
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope='session', params=driver_list)
 def app(request):
-    base_url = request.config.getoption("--base-url")
-    headless_mode = request.config.getoption("--headless").lower()
-    logger.info(f"Start test platform {base_url} with headless={headless_mode} mode")
-    if headless_mode == "true":
-        chrome_options = Options()
-        chrome_options.headless = False
-        fixture = Application(driver_chrome, base_url)
-    elif headless_mode == "false":
-        fixture = Application(driver_chrome, base_url)
-    else:
-        raise pytest.UsageError("--headless should be true or false")
+    base_url = request.config.getoption('--base-url')
+    fixture = Application(request.param, base_url)
     yield fixture
     fixture.quit()
 
 
 @pytest.fixture
 def auth(app, request):
-    username = request.config.getoption("--username")
-    password = request.config.getoption("--password")
+    username = request.config.getoption('--username')
+    password = request.config.getoption('--password')
     app.open_main_page()
 
     auth_data = AuthData(login=username, password=password)
     app.login.auth(auth_data)
-    assert app.login.is_auth(), "You are not auth"
+    assert app.login.is_auth(), 'You are not auth'
     return auth_data
 
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--headless",
-        action="store",
-        default="true",
+        '--headless',
+        action='store',
+        default='true',
         help="enter 'true' if you want run tests in headless mode of browser,\n"
-        "enter 'false' - if not",
+             "enter 'false' - if not",
     ),
     parser.addoption(
-        "--base-url",
-        action="store",
-        default="https://mail.yandex.ru/",
-        help="enter base_url",
+        '--base-url',
+        action='store',
+        default=URL,
+        help='enter base_url',
     ),
     parser.addoption(
-        "--username",
-        action="store",
+        '--username',
+        action='store',
         default=LOGIN,
-        help="enter username",
+        help='enter username',
     ),
     parser.addoption(
-        "--password",
-        action="store",
+        '--password',
+        action='store',
         default=PASSWORD,
-        help="enter password",
+        help='enter password',
     ),
 
 
@@ -90,18 +94,18 @@ def pytest_addoption(parser):
 def pytest_runtest_makereport(item):
     outcome = yield
     rep = outcome.get_result()
-    if rep.when == "call" and rep.failed:
+    if rep.when == 'call' and rep.failed:
         try:
-            if "app" in item.fixturenames:
-                web_driver = item.funcargs["app"]
+            if 'app' in item.fixturenames:
+                web_driver = item.funcargs['app']
             else:
-                logger.error("Fail to take screen-shot")
+                logger.error('Fail to take screen-shot')
                 return
-            logger.info("Screen-shot done")
+            logger.info('Screen-shot done')
             allure.attach(
                 web_driver.driver.get_screenshot_as_png(),
-                name="screenshot",
+                name='screenshot',
                 attachment_type=allure.attachment_type.PNG,
             )
         except Exception as e:
-            logger.error("Fail to take screen-shot: {}".format(e))
+            logger.error(f'Fail to take screen-shot: {e}')
