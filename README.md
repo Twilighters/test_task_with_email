@@ -3,12 +3,12 @@
 # Python + Pytest + Selenium + Selenoid. Test email sending
 ## Selenoid - Selenium grid on docker containers
 ***
-1. Run Selenoid with commands:
-   1. Download the latest release binary from [GitHub releases](https://github.com/aerokube/cm/releases) for your platform (linux/darwin/windows).
-   2. In CLI run ```./cm.exe selenoid start --vnc```
-   3. In CLI run ```./cm.exe selenoid-ui start```
-2. Run tests: ```pytest```
-3. Open the Selenoid UI ```http://localhost:8080/```
+1. Download _**Configuration Manager (CM)**_ the latest release binary from [GitHub releases](https://github.com/aerokube/cm/releases) for your platform (linux/darwin/windows).
+2. Run Selenoid with commands:
+   1. In CLI run ```./cm.exe selenoid start --vnc```
+   2. In CLI run ```./cm.exe selenoid-ui start```
+3. Run tests: ```pytest```
+4. Open the Selenoid UI ```http://localhost:8080/```
 
 ***
 ## Creating reports with using Allure
