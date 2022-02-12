@@ -3,36 +3,36 @@
 # Python + Pytest + Selenium + Selenoid. Test email sending
 ## Selenoid - Selenium grid on docker containers
 ***
-1. Запустить Selenoid командами:
+1. Run Selenoid with commands:
    1. Download the latest release binary from [GitHub releases](https://github.com/aerokube/cm/releases) for your platform (linux/darwin/windows).
    2. In CLI run ```./cm.exe selenoid start --vnc```
    3. In CLI run ```./cm.exe selenoid-ui start```
-2. Запустить тесты: ```pytest```
-3. Открыть Selenoid UI, который доступен по адресу http://localhost:8080/
+2. Run tests: ```pytest```
+3. Open the Selenoid UI ```http://localhost:8080/```
 
 ***
-## Создание отчетов при помощи Allure
+## Creating reports with using Allure
 
 ***
-Чтобы сгенерировать Allure отчет после прогона тестов необходимо выполнить два шага:
-1. Скачать (установить) _**Allure commandline application**_  на свою операционную систему.
+To generate an Allure report after running the tests, you need to perform two steps:
+1. Download and install _**Allure commandline application**_ on your OS.
 
-   **Для пользователей Windows** лучше выбрать один из 2-х нижеперечисленных вариантов:
-   1) Установить _**Allure commandline application**_ через _**PowerShell**_ командой:
-   <br>```scoop install allure```<br>
-      смотри [видеоинструкцию](https://www.youtube.com/watch?v=3WuTSDkfuqQ) (таймкод с 0:38 по 1:10)
-   2) Если у вас не установлен scoop, то тогда следует скачать _**Allure commandline application**_ вручную:<br>
-      смотри [видеоинструкцию](https://www.youtube.com/watch?v=3WuTSDkfuqQ) (таймкод с 1:39 по 3:07)
-   3) Также вне зависимости от способа установки _**Allure commandline application**_ на Windows,
-   <br>для работы с **Allure** необходимо будет
-   установить Java - [видеоинструкция](https://www.youtube.com/watch?v=6qASwPL86MM&t=1352s) (таймкод с 7:00 по 8:35)
+   **For Windows users, it is better to choose one of the following 2 options:
+   1) Install _**Allure commandline application**_ via _**PowerShell**_ with the command:
+   <br>scoop install allure<br>
+      see [video](https://www.youtube.com/watch?v=3WuTSDkfuqQ) (timecode с 0:38 по 1:10)
+   2) If you do not have scoop installed, then you should download _**Allure commandline application**_ вручную:<br>
+      see [video](https://www.youtube.com/watch?v=3WuTSDkfuqQ) (timecode с 1:39 по 3:07)
+   3)  Also, regardless of the installation method _**Allure commandline application**_ на Windows,
+   <br>for work with **Allure**  you will need to
+   install Java - [video](https://www.youtube.com/watch?v=6qASwPL86MM&t=1352s) (timecode с 7:00 по 8:35)
 
-   **Для пользователей Linux и MacOS** смотрите как установить
-_**Allure commandline application**_ [тут](https://docs.qameta.io/allure/#_installing_a_commandline).
+   **For Linux and macOS users** see how to install
+_**Allure commandline application**_ [here](https://docs.qameta.io/allure/#_installing_a_commandline).
 
-2. Создать данные о выполнении тестов, на основании которых будут сгенерированы отчеты.
-<br>Для этого нужно запускать тесты следующей командой в терминале:<br>```pytest --alluredir=allure_reports```
+2. Create data on the execution of tests, on the basis of which reports will be generated.
+<br>To do this, run the tests with the following command in the terminal:<br>```pytest --alluredir=allure_reports```
 
 
-После прогона тестов останется только сгенерировать отчет командой в терминале:
-<br>```allure serve allure_reports```<br>(отчет будет представлен на страничке браузера)
+After running the tests, you will only need to generate a report using the command in the terminal:
+<br>```allure serve allure_reports```<br>(the report will be presented on the browser page)
